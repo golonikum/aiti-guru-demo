@@ -1,4 +1,4 @@
-import { useEffect, useState } from "react";
+import { useCallback, useEffect, useState } from "react";
 import { useQuery } from "@tanstack/react-query";
 import {
   Search,
@@ -14,6 +14,7 @@ import { api } from "../api/api";
 import { useAuthStore } from "../store/useAuthStore";
 import { NewProductDialog } from "../components/NewProductDialog";
 import type { ProductsResponse } from "../api/types";
+import { useDebounce } from "../hooks/useDebounce";
 
 export const ProductsPage = () => {
   // ... (предыдущие состояния: search, page, sortBy, order)
@@ -58,6 +59,13 @@ export const ProductsPage = () => {
     }
   };
 
+  const handleSearch = useCallback((e: React.ChangeEvent<HTMLInputElement>) => {
+    setSearch(e.target.value);
+    setPage(1);
+  }, []);
+
+  const handleSearchDebounced = useDebounce(handleSearch);
+
   return (
     <div className="min-h-screen bg-gray-50">
       {/* Toast Notification */}
@@ -86,11 +94,7 @@ export const ProductsPage = () => {
           <input
             className="w-full pl-10 pr-4 py-2 bg-gray-100 rounded-md focus:outline-none focus:ring-2 ring-blue-500"
             placeholder="Поиск товаров..."
-            value={search}
-            onChange={(e) => {
-              setSearch(e.target.value);
-              setPage(1);
-            }}
+            onChange={handleSearchDebounced}
           />
         </div>
         <button

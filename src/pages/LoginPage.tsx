@@ -1,17 +1,21 @@
 import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import * as z from "zod";
-import { User } from "lucide-react";
 import { useAuthStore } from "../store/useAuthStore";
 import { api } from "../api/api";
 import { useNavigate } from "react-router-dom";
 import { useEffect, useState } from "react";
 import type { ApiError } from "../api/types";
 import { isApiError } from "../api/utils";
+import LogoIcon from "../assets/logo.svg?react";
+import UserIcon from "../assets/user-icon.svg?react";
+import EyeOffIcon from "../assets/eye-off.svg?react";
+import LockIcon from "../assets/lock.svg?react";
+import CloseIcon from "../assets/close-icon.svg?react";
 
 const loginSchema = z.object({
   username: z.string().min(1, "Логин обязателен"),
-  password: z.string().min(6, "Пароль от 6 символов"),
+  password: z.string().min(1, "Пароль обязателен"),
   remember: z.boolean().default(false),
 });
 
@@ -21,18 +25,21 @@ export const LoginPage = () => {
   const [serverError, setServerError] = useState("");
   const login = useAuthStore((state) => state.login);
   const token = useAuthStore((state) => state.token);
+  const [showPassword, setShowPassword] = useState(false);
   const navigate = useNavigate();
 
   const {
     register,
     handleSubmit,
     formState: { errors, isSubmitting },
+    setValue,
+    watch,
+    setFocus,
   } = useForm({
     resolver: zodResolver(loginSchema),
   });
 
   useEffect(() => {
-    // Если токен появился (после логина или при загрузке), уходим на товары
     if (token) {
       navigate("/products", { replace: true });
     }
@@ -63,73 +70,134 @@ export const LoginPage = () => {
 
   return (
     <div className="min-h-screen flex items-center justify-center bg-gray-50 px-4">
-      <div className="max-w-md w-full space-y-8 p-10 bg-white rounded-xl shadow-lg border border-gray-100">
-        <div className="text-center">
-          <div className="mx-auto h-12 w-12 bg-blue-100 rounded-full flex items-center justify-center text-blue-600">
-            <User size={24} />
-          </div>
-          <h2 className="mt-6 text-3xl font-extrabold text-gray-900">
-            Добро пожаловать!
-          </h2>
-          <p className="mt-2 text-sm text-gray-600">
-            Пожалуйста, авторизируйтесь
-          </p>
-        </div>
-
-        <form className="mt-8 space-y-6" onSubmit={handleSubmit(onSubmit)}>
-          <div className="space-y-4">
-            <div>
-              <input
-                {...register("username")}
-                className="appearance-none rounded-lg block w-full px-3 py-2 border border-gray-300 placeholder-gray-500 text-gray-900 focus:outline-none focus:ring-blue-500 focus:border-blue-500 sm:text-sm"
-                placeholder="Логин (emilys)"
-              />
-              {errors.username && (
-                <p className="text-red-500 text-xs mt-1">
-                  {errors.username.message as string}
-                </p>
-              )}
-            </div>
-            <div className="relative">
-              <input
-                {...register("password")}
-                type="password"
-                className="appearance-none rounded-lg block w-full px-3 py-2 border border-gray-300 placeholder-gray-500 text-gray-900 focus:outline-none focus:ring-blue-500 focus:border-blue-500 sm:text-sm"
-                placeholder="Пароль (emilyspass)"
-              />
-              {errors.password && (
-                <p className="text-red-500 text-xs mt-1">
-                  {errors.password.message as string}
-                </p>
-              )}
-            </div>
+      <div className="glass-card-wrap">
+        <div className="glass-card">
+          <div className="logo-icon">
+            <LogoIcon />
           </div>
 
-          <div className="flex items-center">
-            <input
-              {...register("remember")}
-              type="checkbox"
-              className="h-4 w-4 text-blue-600 focus:ring-blue-500 border-gray-300 rounded"
-            />
-            <label className="ml-2 block text-sm text-gray-900">
-              Запомнить данные
-            </label>
+          <div className="flex flex-col gap-3 text-center">
+            <h1 className="heading-primary">Добро пожаловать!</h1>
+            <p className="secondary-text">Пожалуйста, авторизируйтесь</p>
           </div>
 
-          {serverError && (
-            <div className="text-red-500 text-sm text-center bg-red-50 p-2 rounded">
-              {serverError}
-            </div>
-          )}
-
-          <button
-            type="submit"
-            disabled={isSubmitting}
-            className="group relative w-full flex justify-center py-2 px-4 border border-transparent text-sm font-medium rounded-md text-white bg-blue-600 hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500 disabled:bg-blue-300"
+          <form
+            className="flex flex-col w-full"
+            onSubmit={handleSubmit(onSubmit)}
           >
-            {isSubmitting ? "Вход..." : "Войти"}
-          </button>
-        </form>
+            <div className="space-y-4">
+              <div className="flex flex-col gap-[6px]">
+                <label htmlFor="username" className="input-label">
+                  Логин
+                </label>
+                <div className="relative">
+                  <div className="absolute inset-y-0 left-3 flex items-center pointer-events-none">
+                    <UserIcon />
+                  </div>
+                  <input
+                    {...register("username")}
+                    id="username"
+                    className="input-primary pl-10 pr-12 w-full"
+                    placeholder="Логин (emilys)"
+                  />
+                  {watch("username") && (
+                    <button
+                      type="button"
+                      className="absolute inset-y-0 right-4 flex items-center p-1 transition-colors"
+                      onClick={() => {
+                        setValue("username", "");
+                        setFocus("username");
+                      }}
+                    >
+                      <CloseIcon />
+                    </button>
+                  )}
+                </div>
+
+                {errors.username && (
+                  <p className="text-red-500 text-lg mt-1">
+                    {errors.username.message as string}
+                  </p>
+                )}
+              </div>
+
+              <div className="relative flex flex-col gap-[6px]">
+                <label htmlFor="password" className="input-label">
+                  Пароль
+                </label>
+                <div className="relative">
+                  <div className="absolute inset-y-0 left-3 flex items-center pointer-events-none">
+                    <LockIcon className="w-6 h-6" />
+                  </div>
+                  <input
+                    {...register("password")}
+                    id="password"
+                    type={showPassword ? "text" : "password"}
+                    className="input-primary pl-10 pr-12 w-full"
+                    placeholder="Пароль (emilyspass)"
+                  />
+                  <button
+                    type="button"
+                    className="absolute inset-y-0 right-4 flex items-center"
+                    onClick={() => setShowPassword((val) => !val)}
+                  >
+                    <EyeOffIcon />
+                  </button>
+                </div>
+                {errors.password && (
+                  <p className="text-red-500 text-lg mt-1">
+                    {errors.password.message as string}
+                  </p>
+                )}
+              </div>
+            </div>
+
+            <div className="flex items-center gap-[10px] mt-5 mb-5">
+              <input
+                {...register("remember")}
+                id="remember"
+                type="checkbox"
+                className="relative appearance-none w-5 h-5 border-2 border-gray-300 rounded-md checked:bg-blue-600 checked:border-blue-600 
+               focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-offset-2
+               hover:border-blue-400 transition-all duration-200 cursor-pointer
+               peer"
+              />
+              <label
+                htmlFor="remember"
+                className="text-[#9C9C9C] text-center text-base font-medium leading-[150%]"
+              >
+                Запомнить данные
+              </label>
+            </div>
+
+            {serverError && (
+              <div className="text-red-500 text-sm mb-5">{serverError}</div>
+            )}
+
+            <button
+              type="submit"
+              disabled={isSubmitting}
+              className="btn-primary text-white font-inter text-lg font-semibold leading-[120%] tracking-[-0.18px]"
+            >
+              {isSubmitting ? "Вход..." : "Войти"}
+            </button>
+
+            <div className="flex items-center gap-4 mt-4">
+              <hr className="flex-1 border-t border-gray-300" />
+              <span className="text-[#EBEBEB] text-[18px] font-medium">
+                или
+              </span>
+              <hr className="flex-1 border-t border-gray-300" />
+            </div>
+          </form>
+
+          <div className="text-[#6C6C6C] text-[18px]">
+            Нет аккаунта?{" "}
+            <button className="text-[#242EDB] font-semibold underline decoration-solid decoration-from-font">
+              Создать
+            </button>
+          </div>
+        </div>
       </div>
     </div>
   );

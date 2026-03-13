@@ -52,23 +52,74 @@
 
 /* Стили базы */
 @layer base {
+  :root {
+    --logo-icon-border: rgba(237, 237, 237, 0.7);
+  }
   body {
     /* Теперь @apply должен заработать, так как выше есть @import */
-    @apply bg-gray-50 text-gray-900 antialiased;
+    @apply bg-gray-50 text-gray-900 antialiased font-['Inter'];
   }
 }
 
 /* Кастомные компоненты */
 @layer components {
   .input-primary {
-    @apply w-full px-4 py-2 border border-gray-300 rounded-lg 
-           focus:ring-2 focus:ring-blue-500/50 focus:border-blue-500 
-           outline-none transition-all placeholder:text-gray-400;
+    @apply flex items-center gap-3.5 rounded-xl border-2 bg-white px-[16px] py-[14px] text-[18px];
+    border-color: #ededed;
+  }
+
+  .input-label {
+    @apply text-lg font-medium leading-[150%] tracking-[-0.27px] text-[#232323];
+  }
+
+  .secondary-text {
+    @apply text-[#E0E0E0] text-center text-lg font-medium leading-[150%];
+  }
+
+  .heading-primary {
+    @apply w-full text-[#232323] text-center text-4xl font-semibold leading-[110%] tracking-[-0.6px];
   }
 
   .btn-primary {
-    @apply px-6 py-2 bg-blue-600 text-white font-semibold rounded-lg
-           hover:bg-blue-700 active:scale-95 transition-all
-           disabled:bg-blue-300 shadow-md shadow-blue-200;
+    @apply flex items-center justify-center gap-2 p-4 px-2 self-stretch rounded-xl border;
+    border-color: #367aff;
+    background:
+      linear-gradient(
+        0deg,
+        rgba(255, 255, 255, 0) 0%,
+        rgba(255, 255, 255, 0.12) 100%
+      ),
+      #242edb;
+    box-shadow:
+      0 8px 8px 0 rgba(54, 122, 255, 0.03),
+      0 -2px 0 1px rgba(0, 0, 0, 0.08) inset;
+  }
+
+  .glass-card-wrap {
+    @apply flex flex-col items-center justify-center gap-8 w-[527px] 
+           p-1.5 shrink-0 rounded-[40px] bg-white shadow-[0_24px_32px_0_rgba(0,0,0,0.04)];
+  }
+
+  .glass-card {
+    @apply flex flex-col items-center gap-8 p-12 self-stretch rounded-[34px] border border-[#EDEDED];
+    background: linear-gradient(
+      180deg,
+      rgba(35, 35, 35, 0.03) 0%,
+      rgba(35, 35, 35, 0) 50%
+    );
+  }
+
+  .logo-icon {
+    @apply flex flex-col items-center justify-center gap-[10px] size-13 aspect-square rounded-[100px] border border-[var(--logo-icon-border)];
+    box-shadow:
+      0 0 0 2px white,
+      0 12px 8px 0 rgba(0, 0, 0, 0.03);
+    background:
+      linear-gradient(
+        0deg,
+        rgba(35, 35, 35, 0) 50%,
+        rgba(35, 35, 35, 0.06) 100%
+      ),
+      #fff;
   }
 }
