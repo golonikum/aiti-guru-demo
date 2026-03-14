@@ -1,4 +1,4 @@
-export interface Product {
+export type Product = {
   id: number;
   title: string;
   price: number;
@@ -8,13 +8,15 @@ export interface Product {
   brand: string;
   sku: string;
   rating: number;
-}
+};
 
-export interface ProductsResponse {
-  products: Product[];
+export interface PageResponse {
   total: number;
   skip: number;
   limit: number;
+}
+export interface ProductsResponse extends PageResponse {
+  products: Product[];
 }
 
 export interface ApiError {

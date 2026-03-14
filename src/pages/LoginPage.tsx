@@ -97,7 +97,7 @@ export const LoginPage = () => {
                   <input
                     {...register("username")}
                     id="username"
-                    className="input-primary pl-10 pr-12 w-full"
+                    className="input-primary pl-10 pr-12"
                     placeholder="Логин (emilys)"
                   />
                   {watch("username") && (
@@ -133,7 +133,7 @@ export const LoginPage = () => {
                     {...register("password")}
                     id="password"
                     type={showPassword ? "text" : "password"}
-                    className="input-primary pl-10 pr-12 w-full"
+                    className="input-primary pl-10 pr-12"
                     placeholder="Пароль (emilyspass)"
                   />
                   <button
@@ -157,10 +157,7 @@ export const LoginPage = () => {
                 {...register("remember")}
                 id="remember"
                 type="checkbox"
-                className="relative appearance-none w-5 h-5 border-2 border-gray-300 rounded-md checked:bg-blue-600 checked:border-blue-600 
-               focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-offset-2
-               hover:border-blue-400 transition-all duration-200 cursor-pointer
-               peer"
+                className="input-checkbox w-[18px] h-[18px]"
               />
               <label
                 htmlFor="remember"
@@ -177,7 +174,7 @@ export const LoginPage = () => {
             <button
               type="submit"
               disabled={isSubmitting}
-              className="btn-primary text-white font-inter text-lg font-semibold leading-[120%] tracking-[-0.18px]"
+              className="btn-primary"
             >
               {isSubmitting ? "Вход..." : "Войти"}
             </button>

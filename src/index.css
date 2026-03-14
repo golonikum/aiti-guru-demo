@@ -54,6 +54,12 @@
 @layer base {
   :root {
     --logo-icon-border: rgba(237, 237, 237, 0.7);
+    --color-gray-2: #ececeb;
+    --color-gray-3: #b2b3b9;
+    --color-theme-Gray: #969b9f;
+    --color-black: #333;
+    --color-soft-green: #ebf3ea;
+    --shadow-2: 0 20px 50px 0 rgba(0, 0, 0, 0.12);
   }
   body {
     /* Теперь @apply должен заработать, так как выше есть @import */
@@ -64,12 +70,18 @@
 /* Кастомные компоненты */
 @layer components {
   .input-primary {
-    @apply flex items-center gap-3.5 rounded-xl border-2 bg-white px-[16px] py-[14px] text-[18px];
+    @apply flex items-center gap-3.5 rounded-xl border-2 bg-white px-[16px] py-[14px] text-[18px] w-full;
     border-color: #ededed;
   }
 
   .input-label {
     @apply text-lg font-medium leading-[150%] tracking-[-0.27px] text-[#232323];
+  }
+
+  .input-checkbox {
+    @apply w-[22px] h-[22px] relative appearance-none w-5 h-5 border-2 border-gray-300 rounded-md checked:bg-[#3C538E] 
+           focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-offset-2 
+           hover:border-blue-400 transition-all duration-200 cursor-pointer;
   }
 
   .secondary-text {
@@ -80,9 +92,17 @@
     @apply w-full text-[#232323] text-center text-4xl font-semibold leading-[110%] tracking-[-0.6px];
   }
 
-  .btn-primary {
-    @apply flex items-center justify-center gap-2 p-4 px-2 self-stretch rounded-xl border;
+  .btn-primary,
+  .btn-secondary {
+    @apply flex text-lg font-semibold items-center justify-center gap-2 p-4 px-2 self-stretch rounded-xl border leading-[120%] tracking-[-0.18px];
     border-color: #367aff;
+    box-shadow:
+      0 8px 8px 0 rgba(54, 122, 255, 0.03),
+      0 -2px 0 1px rgba(0, 0, 0, 0.08) inset;
+  }
+
+  .btn-primary {
+    @apply text-white;
     background:
       linear-gradient(
         0deg,
@@ -90,9 +110,10 @@
         rgba(255, 255, 255, 0.12) 100%
       ),
       #242edb;
-    box-shadow:
-      0 8px 8px 0 rgba(54, 122, 255, 0.03),
-      0 -2px 0 1px rgba(0, 0, 0, 0.08) inset;
+  }
+
+  .btn-secondary {
+    @apply text-gray-500;
   }
 
   .glass-card-wrap {
