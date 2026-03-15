@@ -8,6 +8,7 @@ export type Product = {
   brand: string;
   sku: string;
   rating: number;
+  thumbnail: string;
 };
 
 export interface PageResponse {

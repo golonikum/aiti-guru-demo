@@ -1,17 +1,17 @@
 import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import * as z from "zod";
-import { useAuthStore } from "../store/useAuthStore";
-import { api } from "../api/api";
+import { useAuthStore } from "@/store/useAuthStore";
+import { api } from "@/api/api";
 import { useNavigate } from "react-router-dom";
 import { useEffect, useState } from "react";
-import type { ApiError } from "../api/types";
-import { isApiError } from "../api/utils";
-import LogoIcon from "../assets/logo.svg?react";
-import UserIcon from "../assets/user-icon.svg?react";
-import EyeOffIcon from "../assets/eye-off.svg?react";
-import LockIcon from "../assets/lock.svg?react";
-import CloseIcon from "../assets/close-icon.svg?react";
+import type { ApiError } from "@/api/types";
+import { isApiError } from "@/api/utils";
+import LogoIcon from "@/assets/logo.svg?react";
+import UserIcon from "@/assets/user-icon.svg?react";
+import EyeOffIcon from "@/assets/eye-off.svg?react";
+import LockIcon from "@/assets/lock.svg?react";
+import CloseIcon from "@/assets/close-icon.svg?react";
 
 const loginSchema = z.object({
   username: z.string().min(1, "Логин обязателен"),
@@ -69,7 +69,7 @@ export const LoginPage = () => {
   };
 
   return (
-    <div className="min-h-screen flex items-center justify-center bg-gray-50 px-4">
+    <div className="min-h-screen flex items-center justify-center bg-gray-102 px-4">
       <div className="glass-card-wrap">
         <div className="glass-card">
           <div className="logo-icon">
@@ -103,7 +103,7 @@ export const LoginPage = () => {
                   {watch("username") && (
                     <button
                       type="button"
-                      className="absolute inset-y-0 right-4 flex items-center p-1 transition-colors"
+                      className="absolute inset-y-0 right-4 flex items-center p-1 transition-colors cursor-pointer"
                       onClick={() => {
                         setValue("username", "");
                         setFocus("username");
@@ -138,7 +138,7 @@ export const LoginPage = () => {
                   />
                   <button
                     type="button"
-                    className="absolute inset-y-0 right-4 flex items-center"
+                    className="absolute inset-y-0 right-4 flex items-center cursor-pointer"
                     onClick={() => setShowPassword((val) => !val)}
                   >
                     <EyeOffIcon />
@@ -161,7 +161,7 @@ export const LoginPage = () => {
               />
               <label
                 htmlFor="remember"
-                className="text-[#9C9C9C] text-center text-base font-medium leading-[150%]"
+                className="text-gray-400 text-center text-base font-medium leading-[150%]"
               >
                 Запомнить данные
               </label>
@@ -181,16 +181,14 @@ export const LoginPage = () => {
 
             <div className="flex items-center gap-4 mt-4">
               <hr className="flex-1 border-t border-gray-300" />
-              <span className="text-[#EBEBEB] text-[18px] font-medium">
-                или
-              </span>
+              <span className="text-gray-102 text-[18px] font-medium">или</span>
               <hr className="flex-1 border-t border-gray-300" />
             </div>
           </form>
 
-          <div className="text-[#6C6C6C] text-[18px]">
+          <div className="text-gray-500 text-[18px]">
             Нет аккаунта?{" "}
-            <button className="text-[#242EDB] font-semibold underline decoration-solid decoration-from-font">
+            <button className="text-blue-700 font-semibold underline decoration-solid decoration-from-font">
               Создать
             </button>
           </div>

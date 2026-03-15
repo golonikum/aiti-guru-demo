@@ -1,7 +1,7 @@
 import { LogOut, Search } from "lucide-react";
 import type { FC } from "react";
 import type { PageHeaderProps } from "./types";
-import { useAuthStore } from "../../store/useAuthStore";
+import { useAuthStore } from "@/store/useAuthStore";
 
 export const PageHeader: FC<PageHeaderProps> = ({ title, onSearch }) => {
   const logout = useAuthStore((s) => s.logout);

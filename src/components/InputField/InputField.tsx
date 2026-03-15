@@ -32,7 +32,7 @@ export const InputField = <T extends Record<string, unknown>>({
         {action}
       </div>
       {errors[name] && (
-        <p className="text-red-500 text-lg mt-1">
+        <p className="text-red-500 text-lg mt-0.5">
           {errors[name].message as string}
         </p>
       )}

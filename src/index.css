@@ -8,6 +8,25 @@
   --animate-fade-in: fade-in 0.2s ease-out;
   --animate-zoom-in: zoom-in 0.2s ease-out;
 
+  --color-gray-50: #ebf3ea;
+  --color-gray-100: #ededed;
+  --color-gray-101: #ececeb;
+  --color-gray-102: #ebebeb;
+  --color-gray-200: #e2e2e2;
+  --color-gray-300: #e0e0e0;
+  --color-gray-400: #9c9c9c;
+  --color-gray-401: #b2b3b9;
+  --color-gray-402: #999999;
+  --color-gray-403: #969b9f;
+  --color-gray-500: #6c6c6c;
+  --color-gray-700: #333333;
+  --color-gray-800: #222222;
+  --color-gray-900: #232323;
+  --color-blue-500: #367aff;
+  --color-blue-700: #242edb;
+  --color-blue-800: #3c538e;
+  --color-indigo-400: #797fea;
+
   @keyframes progress {
     0% {
       transform: translateX(-100%);
@@ -54,48 +73,41 @@
 @layer base {
   :root {
     --logo-icon-border: rgba(237, 237, 237, 0.7);
-    --color-gray-2: #ececeb;
-    --color-gray-3: #b2b3b9;
-    --color-theme-Gray: #969b9f;
-    --color-black: #333;
-    --color-soft-green: #ebf3ea;
     --shadow-2: 0 20px 50px 0 rgba(0, 0, 0, 0.12);
   }
   body {
     /* Теперь @apply должен заработать, так как выше есть @import */
-    @apply bg-gray-50 text-gray-900 antialiased font-['Inter'];
+    @apply bg-gray-102 text-gray-900 antialiased font-['Inter'];
   }
 }
 
 /* Кастомные компоненты */
 @layer components {
   .input-primary {
-    @apply flex items-center gap-3.5 rounded-xl border-2 bg-white px-[16px] py-[14px] text-[18px] w-full;
-    border-color: #ededed;
+    @apply flex items-center gap-3.5 rounded-xl border-2 bg-white px-[16px] py-[14px] text-[18px] w-full border-gray-100;
   }
 
   .input-label {
-    @apply text-lg font-medium leading-[150%] tracking-[-0.27px] text-[#232323];
+    @apply text-lg font-medium leading-[150%] tracking-[-0.27px] text-gray-900;
   }
 
   .input-checkbox {
-    @apply w-[22px] h-[22px] relative appearance-none w-5 h-5 border-2 border-gray-300 rounded-md checked:bg-[#3C538E] 
+    @apply w-[22px] h-[22px] relative appearance-none w-5 h-5 border-2 border-gray-300 rounded-md checked:bg-blue-800 
            focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-offset-2 
            hover:border-blue-400 transition-all duration-200 cursor-pointer;
   }
 
   .secondary-text {
-    @apply text-[#E0E0E0] text-center text-lg font-medium leading-[150%];
+    @apply text-gray-300 text-center text-lg font-medium leading-[150%];
   }
 
   .heading-primary {
-    @apply w-full text-[#232323] text-center text-4xl font-semibold leading-[110%] tracking-[-0.6px];
+    @apply w-full text-gray-900 text-center text-4xl font-semibold leading-[110%] tracking-[-0.6px];
   }
 
   .btn-primary,
   .btn-secondary {
-    @apply flex text-lg font-semibold items-center justify-center gap-2 p-4 px-2 self-stretch rounded-xl border leading-[120%] tracking-[-0.18px];
-    border-color: #367aff;
+    @apply flex text-lg font-semibold items-center justify-center gap-2 p-4 px-2 self-stretch rounded-xl border leading-[120%] tracking-[-0.18px] border-blue-500;
     box-shadow:
       0 8px 8px 0 rgba(54, 122, 255, 0.03),
       0 -2px 0 1px rgba(0, 0, 0, 0.08) inset;
@@ -122,7 +134,7 @@
   }
 
   .glass-card {
-    @apply flex flex-col items-center gap-8 p-12 self-stretch rounded-[34px] border border-[#EDEDED];
+    @apply flex flex-col items-center gap-8 p-12 self-stretch rounded-[34px] border border-gray-100;
     background: linear-gradient(
       180deg,
       rgba(35, 35, 35, 0.03) 0%,
@@ -141,6 +153,6 @@
         rgba(35, 35, 35, 0) 50%,
         rgba(35, 35, 35, 0.06) 100%
       ),
-      #fff;
+      white;
   }
 }

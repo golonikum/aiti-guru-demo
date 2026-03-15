@@ -17,12 +17,12 @@ export const TablePagination: FC<TablePaginationProps> = ({
       <div>
         {!!total && (
           <>
-            <span className="text-[var(--color-theme-Gray)]">Показано</span>{" "}
-            <span className="text-[var(--color-black)]">
+            <span className="text-gray-403">Показано</span>{" "}
+            <span className="text-gray-700">
               {(page - 1) * limit + 1}-{Math.min(page * limit, total || 0)}
             </span>{" "}
-            <span className="text-[var(--color-theme-Gray)]">из</span>{" "}
-            <span className="text-[var(--color-black)]">{total || 0}</span>
+            <span className="text-gray-403">из</span>{" "}
+            <span className="text-gray-700">{total || 0}</span>
           </>
         )}
       </div>
@@ -39,9 +39,9 @@ export const TablePagination: FC<TablePaginationProps> = ({
                 key={b}
                 onClick={page !== b ? () => setPage(b) : undefined}
                 className={clsx(
-                  "flex flex-col justify-center items-center border border-[var(--color-gray-2)] rounded-[4px] disabled:opacity-30 w-[30px] h-[30px] text-[14px] font-normal ",
-                  b === page && "bg-[#797FEA] text-white",
-                  b !== page && "text-[var(--color-theme-Gray)] cursor-pointer",
+                  "flex flex-col justify-center items-center border border-gray-101 rounded-[4px] disabled:opacity-30 w-[30px] h-[30px] text-[14px] font-normal font-['Manrope']",
+                  b === page && "bg-indigo-400 text-white",
+                  b !== page && "text-gray-403 cursor-pointer",
                 )}
               >
                 {b}

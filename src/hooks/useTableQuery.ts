@@ -1,7 +1,7 @@
 import { useQuery } from "@tanstack/react-query";
-import { useState } from "react";
-import type { PageResponse } from "../api/types";
-import { api } from "../api/api";
+import { useCallback, useState } from "react";
+import type { PageResponse } from "@/api/types";
+import { api } from "@/api/api";
 
 export const useTableQuery = <T extends PageResponse>({
   queryKey,
@@ -16,6 +16,19 @@ export const useTableQuery = <T extends PageResponse>({
   const [search, setSearch] = useState("");
   const [sortBy, setSortBy] = useState("title");
   const [order, setOrder] = useState<"asc" | "desc">("asc");
+
+  const handleSort = useCallback(
+    (field: string) => {
+      setPage(1);
+
+      if (sortBy === field) setOrder(order === "asc" ? "desc" : "asc");
+      else {
+        setSortBy(field);
+        setOrder("asc");
+      }
+    },
+    [sortBy, order, setSortBy, setOrder, setPage],
+  );
 
   const { data, isLoading, refetch } = useQuery<T>({
     queryKey: [queryKey, search, page, sortBy, order],
@@ -34,11 +47,8 @@ export const useTableQuery = <T extends PageResponse>({
     refetch,
     search,
     setSearch,
-    sortBy,
-    setSortBy,
-    order,
-    setOrder,
     page,
     setPage,
+    handleSort,
   };
 };
