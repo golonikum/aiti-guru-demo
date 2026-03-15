@@ -1,73 +1,163 @@
-# React + TypeScript + Vite
+# 🛒 AITI Guru Demo
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+Система управления товарами с современным интерфейсом, созданная на базе React, TypeScript и Vite.
 
-Currently, two official plugins are available:
+## ✨ Особенности
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react) uses [Oxc](https://oxc.rs)
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react-swc) uses [SWC](https://swc.rs/)
+- 🔐 **Аутентификация**: Система входа с поддержкой запоминания пользователя
+- 📊 **Управление товарами**: Полнофункциональная таблица товаров с пагинацией
+- 🔍 **Поиск и фильтрация**: Умный поиск с дебаунсингом
+- 📝 **Добавление товаров**: Диалоговое окно для создания новых товаров с валидацией
+- 🎨 **Современный дизайн**: Элегантный интерфейс с использованием Tailwind CSS
+- ⚡ **Быстрая загрузка**: Оптимизированный рендеринг с использованием React Query
+- 📱 **Адаптивность**: Интерфейс, адаптированный под различные устройства
+- 🌍 **Локализация**: Интерфейс на русском языке
 
-## React Compiler
+## 🚀 Технологический стек
 
-The React Compiler is not enabled on this template because of its impact on dev & build performances. To add it, see [this documentation](https://react.dev/learn/react-compiler/installation).
+### Frontend
 
-## Expanding the ESLint configuration
+- **React 19.2.4** - Библиотека для создания пользовательских интерфейсов
+- **TypeScript 5.9.3** - Статическая типизация JavaScript
+- **Vite 8.0.0** - Быстрый сборщик модулей
+- **Tailwind CSS 4.2.1** - CSS-фреймворк для быстрой стилизации
 
-If you are developing a production application, we recommend updating the configuration to enable type-aware lint rules:
+### Управление состоянием и данными
 
-```js
-export default defineConfig([
-  globalIgnores(['dist']),
-  {
-    files: ['**/*.{ts,tsx}'],
-    extends: [
-      // Other configs...
+- **Zustand 5.0.11** - Лёгкое управление состоянием
+- **TanStack Query (React Query) 5.90.21** - Управление серверным состоянием
+- **Axios 1.13.6** - HTTP-клиент для API запросов
 
-      // Remove tseslint.configs.recommended and replace with this
-      tseslint.configs.recommendedTypeChecked,
-      // Alternatively, use this for stricter rules
-      tseslint.configs.strictTypeChecked,
-      // Optionally, add this for stylistic rules
-      tseslint.configs.stylisticTypeChecked,
+### Формы и валидация
 
-      // Other configs...
-    ],
-    languageOptions: {
-      parserOptions: {
-        project: ['./tsconfig.node.json', './tsconfig.app.json'],
-        tsconfigRootDir: import.meta.dirname,
-      },
-      // other options...
-    },
-  },
-])
+- **React Hook Form 7.71.2** - Управление формами
+- **Zod 4.3.6** - Схема валидации данных
+- **@hookform/resolvers 5.2.2** - Интеграция Zod с React Hook Form
+
+### Маршрутизация
+
+- **React Router DOM 7.13.1** - Маршрутизация в приложении
+
+### UI-компоненты
+
+- **Lucide React 0.577.0** - Набор иконок
+
+### Инструменты разработки
+
+- **ESLint 9.39.4** - Линтинг кода
+- **TypeScript ESLint 8.56.1** - TypeScript-правила для ESLint
+
+## 📁 Структура проекта
+
+```
+aiti-guru-demo/
+├── src/
+│   ├── api/              # API-запросы и типы данных
+│   ├── assets/           # SVG-иконки и изображения
+│   ├── components/       # Переиспользуемые компоненты
+│   │   ├── InputField/
+│   │   ├── NewProductDialog/
+│   │   ├── PageHeader/
+│   │   ├── PageProgressBar/
+│   │   ├── PageTableLayout/
+│   │   ├── ProtectedRoute/
+│   │   ├── Table/
+│   │   ├── TablePagination/
+│   │   └── TableToolbar/
+│   ├── hooks/            # Пользовательские хуки
+│   ├── pages/            # Страницы приложения
+│   ├── store/            # Глобальное состояние
+│   ├── types/            # Типы TypeScript
+│   └── utils/            # Утилиты
+├── public/               # Статические файлы
+└── ...                   # Конфигурационные файлы
 ```
 
-You can also install [eslint-plugin-react-x](https://github.com/Rel1cx/eslint-react/tree/main/packages/plugins/eslint-plugin-react-x) and [eslint-plugin-react-dom](https://github.com/Rel1cx/eslint-react/tree/main/packages/plugins/eslint-plugin-react-dom) for React-specific lint rules:
+## 🛠️ Установка и запуск
 
-```js
-// eslint.config.js
-import reactX from 'eslint-plugin-react-x'
-import reactDom from 'eslint-plugin-react-dom'
+### Требования
 
-export default defineConfig([
-  globalIgnores(['dist']),
-  {
-    files: ['**/*.{ts,tsx}'],
-    extends: [
-      // Other configs...
-      // Enable lint rules for React
-      reactX.configs['recommended-typescript'],
-      // Enable lint rules for React DOM
-      reactDom.configs.recommended,
-    ],
-    languageOptions: {
-      parserOptions: {
-        project: ['./tsconfig.node.json', './tsconfig.app.json'],
-        tsconfigRootDir: import.meta.dirname,
-      },
-      // other options...
-    },
-  },
-])
+- Node.js 18+
+- npm или yarn
+
+### Установка зависимостей
+
+```bash
+npm install
+# или
+yarn install
 ```
+
+### Запуск в режиме разработки
+
+```bash
+npm run dev
+# или
+yarn dev
+```
+
+Приложение будет доступно по адресу [http://localhost:5173](http://localhost:5173)
+
+### Сборка для продакшена
+
+```bash
+npm run build
+# или
+yarn build
+```
+
+### Предпросмотр продакшен-сборки
+
+```bash
+npm run preview
+# или
+yarn preview
+```
+
+## 📝 Основные компоненты
+
+### Таблица товаров
+
+- Сортировка по цене и рейтингу
+- Выбор нескольких товаров
+- Кастомные рендереры для каждого столбца
+- Пагинация
+
+### Форма входа
+
+- Валидация полей
+- Отображение ошибок
+- Опция "Запомнить меня"
+- Возможность скрыть/показать пароль
+
+### Диалоговое окно создания товара
+
+- Валидация полей с помощью Zod
+- Поля: наименование, цена, вендор, артикул
+- Анимации открытия и закрытия
+
+## 🔧 Конфигурация
+
+### ESLint
+
+Проект использует ESLint для поддержания качества кода. Конфигурация находится в файле `eslint.config.js`.
+
+### Tailwind CSS
+
+Конфигурация Tailwind CSS находится в файле `tailwind.config.js`.
+
+### TypeScript
+
+Конфигурация TypeScript разделена на два файла:
+
+- `tsconfig.json` - базовая конфигурация
+- `tsconfig.app.json` - конфигурация для приложения
+- `tsconfig.node.json` - конфигурация для инструментов сборки
+
+## 📄 Лицензия
+
+Этот проект создан для демонстрационных целей.
+
+---
+
+**Примечание**: Для работы с API проект использует публичный API [DummyJSON](https://dummyjson.com/).
