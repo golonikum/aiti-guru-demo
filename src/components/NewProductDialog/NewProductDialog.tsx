@@ -4,6 +4,7 @@ import * as z from "zod";
 import { X } from "lucide-react";
 import { InputField } from "@/components/InputField";
 import type { NewProductDialogProps } from "./types";
+import { useEffect } from "react";
 
 const productSchema = z.object({
   title: z.string().min(3, "Минимум 3 символа"),
@@ -21,14 +22,20 @@ export const NewProductDialog = ({
   onClose,
   onSuccess,
 }: NewProductDialogProps) => {
-  const {
-    register,
-    handleSubmit,
-    formState: { errors, isSubmitting },
-    reset,
-  } = useForm<ProductForm>({
+  const form = useForm<ProductForm>({
     resolver: zodResolver(productSchema),
   });
+  const {
+    handleSubmit,
+    formState: { isSubmitting },
+    reset,
+  } = form;
+
+  useEffect(() => {
+    if (isOpen) {
+      reset();
+    }
+  }, [isOpen, reset]);
 
   if (!isOpen) return null;
 
@@ -59,8 +66,7 @@ export const NewProductDialog = ({
           <InputField
             name="title"
             label="Наименование"
-            register={register}
-            errors={errors}
+            form={form}
             inputProps={{
               placeholder: "Напр: iPhone 15 Pro",
             }}
@@ -68,19 +74,18 @@ export const NewProductDialog = ({
           <InputField
             name="price"
             label="Цена"
-            register={register}
-            errors={errors}
+            form={form}
             inputProps={{
               placeholder: "0.00",
               type: "number",
               step: 0.01,
             }}
+            clearable={false}
           />
           <InputField
             name="brand"
             label="Вендор"
-            register={register}
-            errors={errors}
+            form={form}
             inputProps={{
               placeholder: "Apple",
             }}
@@ -88,8 +93,7 @@ export const NewProductDialog = ({
           <InputField
             name="sku"
             label="Артикул"
-            register={register}
-            errors={errors}
+            form={form}
             inputProps={{
               placeholder: "SKU-778899",
             }}

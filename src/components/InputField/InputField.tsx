@@ -1,15 +1,24 @@
 import clsx from "clsx";
 import type { InputFieldProps } from "./types";
+import CloseIcon from "@/assets/close-icon.svg?react";
 
 export const InputField = <T extends Record<string, unknown>>({
   icon,
   action,
   label,
-  register,
+  form,
   name,
-  errors,
   inputProps,
+  clearable = true,
 }: InputFieldProps<T>) => {
+  const {
+    formState: { errors },
+    register,
+    watch,
+    resetField,
+    setFocus,
+  } = form;
+
   return (
     <div className="relative flex flex-col">
       {label && (
@@ -25,10 +34,22 @@ export const InputField = <T extends Record<string, unknown>>({
         )}
         <input
           {...inputProps}
-          {...register(name)}
+          {...register(name, { valueAsNumber: inputProps?.type === "number" })}
           id={name}
           className={clsx("input-primary", icon && "pl-12", action && "pr-12")}
         />
+        {clearable && watch?.(name) && (
+          <button
+            type="button"
+            className="absolute inset-y-0 right-4 flex items-center p-1 transition-colors cursor-pointer"
+            onClick={() => {
+              resetField(name);
+              setFocus(name);
+            }}
+          >
+            <CloseIcon />
+          </button>
+        )}
         {action}
       </div>
       {errors[name] && (

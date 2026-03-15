@@ -11,7 +11,7 @@ import LogoIcon from "@/assets/logo.svg?react";
 import UserIcon from "@/assets/user-icon.svg?react";
 import EyeOffIcon from "@/assets/eye-off.svg?react";
 import LockIcon from "@/assets/lock.svg?react";
-import CloseIcon from "@/assets/close-icon.svg?react";
+import { InputField } from "@/components/InputField";
 
 const loginSchema = z.object({
   username: z.string().min(1, "Логин обязателен"),
@@ -28,16 +28,14 @@ export const LoginPage = () => {
   const [showPassword, setShowPassword] = useState(false);
   const navigate = useNavigate();
 
+  const form = useForm({
+    resolver: zodResolver(loginSchema),
+  });
   const {
     register,
     handleSubmit,
-    formState: { errors, isSubmitting },
-    setValue,
-    watch,
-    setFocus,
-  } = useForm({
-    resolver: zodResolver(loginSchema),
-  });
+    formState: { isSubmitting },
+  } = form;
 
   useEffect(() => {
     if (token) {
@@ -86,56 +84,26 @@ export const LoginPage = () => {
             onSubmit={handleSubmit(onSubmit)}
           >
             <div className="space-y-4">
-              <div className="flex flex-col gap-[6px]">
-                <label htmlFor="username" className="input-label">
-                  Логин
-                </label>
-                <div className="relative">
-                  <div className="absolute inset-y-0 left-3 flex items-center pointer-events-none">
-                    <UserIcon />
-                  </div>
-                  <input
-                    {...register("username")}
-                    id="username"
-                    className="input-primary pl-10 pr-12"
-                    placeholder="Логин (emilys)"
-                  />
-                  {watch("username") && (
-                    <button
-                      type="button"
-                      className="absolute inset-y-0 right-4 flex items-center p-1 transition-colors cursor-pointer"
-                      onClick={() => {
-                        setValue("username", "");
-                        setFocus("username");
-                      }}
-                    >
-                      <CloseIcon />
-                    </button>
-                  )}
-                </div>
+              <InputField
+                name="username"
+                label="Логин"
+                inputProps={{
+                  placeholder: "Логин (emilys)",
+                }}
+                form={form}
+                icon={<UserIcon />}
+              />
 
-                {errors.username && (
-                  <p className="text-red-500 text-lg mt-1">
-                    {errors.username.message as string}
-                  </p>
-                )}
-              </div>
-
-              <div className="relative flex flex-col gap-[6px]">
-                <label htmlFor="password" className="input-label">
-                  Пароль
-                </label>
-                <div className="relative">
-                  <div className="absolute inset-y-0 left-3 flex items-center pointer-events-none">
-                    <LockIcon className="w-6 h-6" />
-                  </div>
-                  <input
-                    {...register("password")}
-                    id="password"
-                    type={showPassword ? "text" : "password"}
-                    className="input-primary pl-10 pr-12"
-                    placeholder="Пароль (emilyspass)"
-                  />
+              <InputField
+                name="password"
+                label="Пароль"
+                inputProps={{
+                  type: showPassword ? "text" : "password",
+                  placeholder: "Пароль (emilyspass)",
+                }}
+                form={form}
+                icon={<LockIcon className="w-6 h-6" />}
+                action={
                   <button
                     type="button"
                     className="absolute inset-y-0 right-4 flex items-center cursor-pointer"
@@ -143,13 +111,9 @@ export const LoginPage = () => {
                   >
                     <EyeOffIcon />
                   </button>
-                </div>
-                {errors.password && (
-                  <p className="text-red-500 text-lg mt-1">
-                    {errors.password.message as string}
-                  </p>
-                )}
-              </div>
+                }
+                clearable={false}
+              />
             </div>
 
             <div className="flex items-center gap-[10px] mt-5 mb-5">
